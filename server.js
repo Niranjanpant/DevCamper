@@ -8,6 +8,8 @@ require("./db/mongoose");
 
 //route files
 const bootcamps = require("./routes/bootcamps");
+const courses = require("./routes/courses");
+
 //logger
 const morgan = require("morgan");
 const errorHandler = require("./middleware/error");
@@ -24,6 +26,7 @@ if (process.env.NODE_ENV === "development") {
 
 //mount routers
 app.use("/api/v1/bootcamps", bootcamps);
+app.use("/api/v1/courses", courses);
 
 //custome middleware for error handling
 app.use(errorHandler);
