@@ -1,9 +1,10 @@
 const dotenv = require("dotenv");
 //load env vars
 dotenv.config({ path: "./config/config.env" });
-
+const path = require("path");
 const express = require("express");
 const colors = require("colors");
+const fileupload = require("express-fileupload");
 require("./db/mongoose");
 
 //route files
@@ -24,6 +25,10 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+//fileupload middleware
+app.use(fileupload());
+//set static folder so that we can access it in browser
+app.use(express.static(path.join(__dirname, "public")));
 //mount routers
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
