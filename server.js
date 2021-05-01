@@ -5,11 +5,13 @@ const path = require("path");
 const express = require("express");
 const colors = require("colors");
 const fileupload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 require("./db/mongoose");
 
 //route files
 const bootcamps = require("./routes/bootcamps");
 const courses = require("./routes/courses");
+const auth = require("./routes/auth");
 
 //logger
 const morgan = require("morgan");
@@ -27,11 +29,14 @@ if (process.env.NODE_ENV === "development") {
 
 //fileupload middleware
 app.use(fileupload());
+//cookie parser
+app.use(cookieParser());
 //set static folder so that we can access it in browser
 app.use(express.static(path.join(__dirname, "public")));
 //mount routers
 app.use("/api/v1/bootcamps", bootcamps);
 app.use("/api/v1/courses", courses);
+app.use("/api/v1/auth", auth);
 
 //custome middleware for error handling
 app.use(errorHandler);
